@@ -8,39 +8,83 @@
   </head>
   <body>
     <div id="app">
+      <div>
+        <label for="newCharacter">Enter New Character:</label>
+        <br />
+        <input
+          type="text"
+          v-model="newCharacter.name"
+          @keyup.enter="addNewCharacter"
+        />
+      </div>
       <p v-if="characterList.length === 0">There are no characters</p>
-      <ul v-else-if="characterList.length % 2 === 0">
-        <li v-for="character in characterList">{{ character.name }}</li>
-      </ul>
+      <div v-else>
+        <ul>
+          <li v-for="character in characterList">
+            {{ character.name }}
+            <button @click="favouritecharacter(character)">
+              add to favourite
+            </button>
+          </li>
+        </ul>
+        <hr />
+        <h2>Favourite Characters</h2>
+        <ul>
+          <li v-for="item in favouriteList">{{ item.name }}</li>
+        </ul>
+        <hr />
+      </div>
+
+      <pre>{{newCharacter}}</pre>
       <p>
         <span v-for="(character, index) in characterList"
           >{{ character.name }}{{ index === characterList.length - 1 ? '' : ', '
           }}
         </span>
       </p>
-      <p v-else>There are odd characters!</p>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
       Vue.createApp({
         data: () => ({
+          newCharacter: {
+            name: '',
+          },
+          favouriteList: [
+            {
+              name: 'Kora',
+            },
+          ],
           characterList: [
             {
-              name: 'Aang'
+              name: 'Aang',
             },
             {
-              name: 'Zuko'
+              name: 'Zuko',
             },
             {
-              name: 'Toph'
+              name: 'Toph',
             },
             {
-              name: 'Katara'
+              name: 'Katara',
+            },
+          ],
+        }),
+        methods: {
+          favouritecharacter(character) {
+            this.favouriteList.push(character);
+          },
+          addNewCharacter() {
+            if (this.newCharacter.name) {
+              this.characterList.push(this.newCharacter);
+              this.newCharacter = {
+                name: '',
+              };
             }
-          ]
-        })
-      }).mount('#app')
+          },
+        },
+      }).mount('#app');
     </script>
   </body>
 </html>
