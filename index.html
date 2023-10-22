@@ -8,6 +8,13 @@
   </head>
   <body>
     <div id="app">
+      <h2>Statistics</h2>
+      <ul>
+        <li>Earth: {{earthBenderList.length}}</li>
+        <li>Water:</li>
+        <li>Fire:</li>
+        <li>Air:</li>
+      </ul>
       <p v-if="characterList.length === 0">There are no characters</p>
       <ul v-else-if="characterList.length % 2 === 0">
         <li v-for="character in characterList">
@@ -42,34 +49,46 @@
       Vue.createApp({
         data: () => ({
           newCharacter: {
-            name: ''
+            name: '',
+            element: [],
           },
           characterList: [
             {
-              name: 'Aang'
+              name: 'Aang',
+              element: ['Air', 'Earth', 'Water', 'Fire'],
             },
             {
-              name: 'Zuko'
+              name: 'Zuko',
+              element: ['Fire'],
             },
             {
-              name: 'Toph'
+              name: 'Toph',
+              element: ['Earth'],
             },
             {
-              name: 'Katara'
-            }
+              name: 'Katara',
+              element: ['Water'],
+            },
           ],
-          favoriteList: []
+          favoriteList: [],
         }),
+        computed: {
+          benderStats() {
+            return this.characterList.filter((character) =>
+              character.element.includes('Earth')
+            );
+          },
+        },
         methods: {
           addNewCharacter() {
-            this.characterList.push(this.newCharacter)
-            this.newCharacter = { name: '' }
+            this.characterList.push(this.newCharacter);
+            this.newCharacter = { name: '' };
           },
           favoriteCharacter(character) {
-            this.favoriteList.push(character)
-          }
-        }
-      }).mount('#app')
+            this.favoriteList.push(character);
+          },
+        },
+      }).mount('#app');
     </script>
   </body>
 </html>
