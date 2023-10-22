@@ -78,11 +78,11 @@ export default {
   <hr />
   <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
   <p v-else>Odd: {{ message }}</p>
-  <ul v-for="item in listOfNumbers">
+  <ul v-for="(item, index) in listOfNumbers" :key="`item-${index}`">
     <li>
       {{ item.id }}
       <ul>
-        <li v-for="number in item.list">{{ number }}</li>
+        <li v-for="(number, index) in item.list" :key="`item-${index}`">{{ number }}</li>
       </ul>
     </li>
   </ul>
